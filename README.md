@@ -13,6 +13,7 @@ separate repository.
 
 ```sh
 brew tap nivatune/niva
+brew trust nivatune/niva    # Temporary, until Homebrew audits our product
 brew install niva
 ```
 

@@ -54,8 +54,11 @@ it to the rhythm section.
 
 **macOS (recommended — via Homebrew):**
 
+*Note* that we are submitting Niva for Homebrew audit. Until this process run its course, you will need to manually instruct brew to 'trust' our tap the first time you install.
+
 ```sh
 brew tap nivatune/niva
+brew trust nivatune/niva  
 brew install niva
 ```
 
