@@ -13,16 +13,25 @@ separate repository.
 
 ```sh
 brew tap nivatune/niva
-brew trust nivatune/niva    # Temporary, until Homebrew audits our product
+brew trust nivatune/niva    # Required once for third-party taps
 brew install niva
 ```
 
 ### Manual download
 
-Download the latest `niva-<version>-universal-apple-darwin.tar.gz` from
-[Releases](../../releases), extract it, and place the binaries on your `PATH`.
-Keep `libpdfium.dylib` in the same directory as the `niva` binary — it is
-required for PDF rendering.
+Download the latest release archive for your platform from
+[Releases](../../releases):
+
+- **macOS:** `niva-<version>-universal-apple-darwin.tar.gz`
+- **Windows:** `niva-<version>-x86_64-pc-windows-msvc.zip`
+
+Extract the archive and add the folder to your `PATH` (or move the binaries to
+a directory already on your `PATH`). Keep the PDFium library in the **same
+directory** as the `niva` binary — `libpdfium.dylib` on macOS, `pdfium.dll` on
+Windows. It is required for PDF rendering.
+
+On Windows, Defender SmartScreen may warn about unsigned binaries until code
+signing is in place.
 
 ## Quick start
 
@@ -47,8 +56,9 @@ See [docs/manual.md](docs/manual.md) for the full language reference.
 
 ## Platform
 
-macOS universal binary (Apple Silicon + Intel). Linux and Windows builds are
-planned.
+- **macOS:** universal binary (Apple Silicon + Intel); Homebrew or manual tarball.
+- **Windows:** x64 zip (`niva.exe` + `pdfium.dll`).
+- **Linux:** planned.
 
 ## License
 

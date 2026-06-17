@@ -54,7 +54,7 @@ it to the rhythm section.
 
 **macOS (recommended — via Homebrew):**
 
-*Note* that we are submitting Niva for Homebrew audit. Until this process run its course, you will need to manually instruct brew to 'trust' our tap the first time you install.
+*Note:* `brew trust` is required once per machine for any third-party Homebrew tap.
 
 ```sh
 brew tap nivatune/niva
@@ -62,13 +62,23 @@ brew trust nivatune/niva
 brew install niva
 ```
 
-**Manual download:**
+**Manual download (macOS):**
 
 1. Download the latest `niva-<version>-universal-apple-darwin.tar.gz` from the
    [Releases page](../../releases).
 2. Extract the archive and move both files — `niva` and `libpdfium.dylib` — to a
    directory on your `PATH` (e.g. `/usr/local/bin`). Keep `libpdfium.dylib` in
    the **same directory** as the `niva` binary; it is required for PDF output.
+
+**Manual download (Windows):**
+
+1. Download the latest `niva-<version>-x86_64-pc-windows-msvc.zip` from the
+   [Releases page](../../releases).
+2. Extract the archive and add the folder to your `PATH`, or move `niva.exe` and
+   `pdfium.dll` to a directory already on your `PATH`. Keep `pdfium.dll` in the
+   **same directory** as `niva.exe`; it is required for PDF output.
+3. Windows Defender SmartScreen may warn about unsigned binaries until code
+   signing is in place.
 
 **Verify the install:**
 
