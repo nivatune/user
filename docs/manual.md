@@ -43,8 +43,8 @@ any editor.
 
 Niva is particularly useful for **roadmaps** — single-page reference charts
 that overlay chord symbols and section structure on top of a printed lead
-sheet. Write the roadmap, merge it into a PDF of the original chart, and hand
-it to the rhythm section.
+sheet. Write the roadmap, overlay it on a PDF of the original chart with
+`base`, and hand it to the rhythm section.
 
 ---
 
@@ -286,22 +286,22 @@ Force a break with the `\n` symbol at the end of a bar:
 ```
 
 Supported: `\fermata`, `\staccato`, `\marcato`, `\accent`, and others. An
-unrecognized symbol warns and renders as text.
+unrecognized symbol warns and is ignored.
 
-### Lead-sheet overlay (`merge`)
+### Lead-sheet overlay (`base`)
 
-`merge` composites a Niva roadmap on top of an existing PDF lead sheet. The
+`base` composites a Niva roadmap on top of an existing PDF lead sheet. The
 source page is imported verbatim (original notation stays sharp), the
 front matter is stripped, and the Niva overlay is painted above the body.
 
 ```niva
-merge "original.pdf"
-merge "original.pdf", cut = auto      # detect and remove front matter (default)
-merge "original.pdf", cut = 42mm      # remove first 42 mm from the top
-merge "original.pdf", cut = none      # keep the full original page
+base "original.pdf"
+base "original.pdf", cut = auto      # detect and remove front matter (default)
+base "original.pdf", cut = 42mm      # remove first 42 mm from the top
+base "original.pdf", cut = none      # keep the full original page
 ```
 
-Output is always PDF when `merge` is present.
+Output is always PDF when `base` is present.
 
 ### Comments
 
@@ -312,18 +312,59 @@ Lines beginning with `#` are comments:
 | Cm7 | F7 ||
 ```
 
+### Editions
+
+Pass `--edition Bb` (or `Eb`, `C`) to render a transposed version of a chart.
+Both `include` and `base` resolve their source file for the active edition using
+*standard search*: `Take Five.pdf` becomes `Take Five.Bb.pdf` for the Bb
+edition. When an edition-specific file doesn't exist the renderer falls back to
+the concert chart with a warning.
+
+When a non-concert edition is active and at least one source was found
+edition-specifically, each page gets a small italic label (`Bb edition`, …)
+in the top-left corner — useful when printing from a mixed set book.
+
+### Set books
+
+A single `.niva` file can hold multiple charts and produce a PDF with bookmarks:
+
+```niva
+title "Autumn Leaves"
+include "Autumn Leaves.pdf"
+
+title "So What"
+include "So What.pdf"
+```
+
+**`include`** embeds another file (PDF or `.niva`) as its own pages. A `title`
+directive before an `include` sets the bookmark label. Without an explicit
+title, the label is derived from the filename (extension and edition suffix
+stripped).
+
+**`start` / `end`** create named chapters (segments) in the bookmark outline:
+
+```niva
+start "Blues"
+  title "Blue Monk"; include "Blue Monk.pdf"
+  title "Freddie Freeloader"; include "Freddie Freeloader.pdf"
+end "Blues"
+```
+
+SVG output does not support multi-score files.
+
 ### CLI reference
 
 ```
 niva render <file.niva> [-o <output>]      Render a chart to PDF (default) or SVG
 niva render <file.niva> --format svg       Force SVG output
-niva render <file.niva> --bars-per-row N    Limit bars per row (default 4)
-niva render <file.niva> --config <f.toml>   Use a TOML config file
+niva render <file.niva> --bars-per-row N   Limit bars per row (default 4)
+niva render <file.niva> --edition Bb       Render a transposed edition (Bb, Eb, C)
+niva render <file.niva> --config <f.toml>  Use a TOML config file
 niva --version                             Print the version
 ```
 
 Output defaults to PDF. Pass `--format svg`, or name an `.svg` output with
-`-o`, to produce SVG instead. A score containing `merge` always renders to PDF.
+`-o`, to produce SVG instead. A score containing `base` always renders to PDF.
 
 ## What's in the name?
 
