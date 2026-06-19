@@ -345,10 +345,12 @@ stripped).
 
 ```niva
 start "Blues"
-  title "Blue Monk"; include "Blue Monk.pdf"
-  title "Freddie Freeloader"; include "Freddie Freeloader.pdf"
+title "Blue Monk"; include "Blue Monk.pdf"
+title "Freddie Freeloader"; include "Freddie Freeloader.pdf"
 end "Blues"
 ```
+
+**Note** that indents are not allowed.
 
 SVG output does not support multi-score files.
 
